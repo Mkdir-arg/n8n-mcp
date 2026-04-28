@@ -71,7 +71,9 @@ describeDocker('Docker Entrypoint Script', () => {
     } else if (result.status === 'missing') {
       console.warn(result.message);
     }
-  }, 30000);
+    // Inspect-only path is sub-second. The 5-minute window covers BUILD_DOCKER_TEST_IMAGE=true
+    // local auto-builds, which need to finish the npm install in the builder stage.
+  }, 300000);
 
   beforeEach(() => {
     tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'docker-entrypoint-test-'));
